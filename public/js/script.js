@@ -36,16 +36,19 @@ const formConnexion = document.getElementById("form-connexion");
 // Ouverture de la modale
 // --------------------------------------------
 // Écouteur d'événement sur le bouton "S'inscrire / Se connecter"
-btnOpenModal.addEventListener("click", () => {
-  // Ajout de la classe 'active' pour afficher la modale
-  modal.classList.add("active");
+// Vérification que le bouton existe (il n'existe pas si l'utilisateur est connecté)
+if (btnOpenModal) {
+  btnOpenModal.addEventListener("click", () => {
+    // Ajout de la classe 'active' pour afficher la modale
+    modal.classList.add("active");
 
-  // Désactivation du scroll de la page en arrière-plan
-  document.body.style.overflow = "hidden";
+    // Désactivation du scroll de la page en arrière-plan
+    document.body.style.overflow = "hidden";
 
-  // Activation du piège de focus pour l'accessibilité
-  trapFocus();
-});
+    // Activation du piège de focus pour l'accessibilité
+    trapFocus();
+  });
+}
 
 // --------------------------------------------
 // Fermeture de la modale
@@ -140,32 +143,72 @@ function trapFocus() {
 }
 
 // ============================================
-// SOUMISSION DES FORMULAIRES (Version statique)
+// SOUMISSION AJAX DES FORMULAIRES
 // ============================================
-// Note : Ces gestionnaires sont temporaires
-// Ils seront remplacés par des requêtes AJAX lors de l'implémentation
-// de la fonctionnalité d'authentification côté serveur
 
-// Gestion du formulaire d'inscription
+// --------------------------------------------
+// Formulaire d'inscription
+// --------------------------------------------
 formInscription.addEventListener("submit", (e) => {
   // Empêche l'envoi du formulaire par défaut
   e.preventDefault();
 
-  // Affichage d'un message temporaire
-  alert("Formulaire d'inscription soumis ! (Version statique)");
+  // Création d'un objet FormData avec les données du formulaire
+  const formData = new FormData(formInscription);
 
-  // Fermeture de la modale
-  closeModal();
+  // Envoi de la requête AJAX vers le contrôleur d'inscription
+  fetch(window.location.origin + "/skillhub/?action=auth/inscription", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Inscription réussie : affichage du message
+        alert(data.message);
+        // Réinitialisation du formulaire
+        formInscription.reset();
+
+        // Basculer automatiquement vers l'onglet connexion
+        document.querySelector('[data-tab="connexion"]').click();
+      } else {
+        // Erreur : affichage du message d'erreur
+        alert(data.message);
+      }
+    })
+    .catch((error) => {
+      alert("Erreur lors de l'inscription. Veuillez réessayer.");
+    });
 });
 
-// Gestion du formulaire de connexion
+// --------------------------------------------
+// Formulaire de connexion
+// --------------------------------------------
 formConnexion.addEventListener("submit", (e) => {
   // Empêche l'envoi du formulaire par défaut
   e.preventDefault();
 
-  // Affichage d'un message temporaire
-  alert("Formulaire de connexion soumis ! (Version statique)");
+  // Création d'un objet FormData avec les données du formulaire
+  const formData = new FormData(formConnexion);
 
-  // Fermeture de la modale
-  closeModal();
+  // Envoi de la requête AJAX vers le contrôleur de connexion
+  fetch(window.location.origin + "/skillhub/?action=auth/connexion", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Connexion réussie : affichage du message et rechargement de la page
+        alert(data.message);
+        // Rechargement pour afficher le bouton de déconnexion
+        window.location.reload();
+      } else {
+        // Erreur : affichage du message d'erreur
+        alert(data.message);
+      }
+    })
+    .catch((error) => {
+      alert("Erreur lors de la connexion. Veuillez réessayer.");
+    });
 });
