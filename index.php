@@ -7,11 +7,23 @@
  */
 
 // ============================================
+// DÉMARRAGE DE LA SESSION
+// ============================================
+// Indispensable pour gérer la connexion des utilisateurs
+session_start();
+
+// ============================================
 // CONFIGURATION DE BASE
 // ============================================
 // Définition de l'URL racine de l'application
 // Cette constante est utilisée dans toute l'application pour générer les liens
 define("URL", "http://localhost/skillhub/");
+
+// ============================================
+// CHARGEMENT DU QUERY BUILDER
+// ============================================
+// Inclusion du Query Builder pour la gestion de la base de données
+require_once "core/query.php";
 
 // ============================================
 // CHARGEMENT DU ROUTEUR

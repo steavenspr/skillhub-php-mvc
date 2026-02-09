@@ -859,6 +859,48 @@ nav a:focus {
   background: #1e40af;
 }
 
+/* ============================================ */
+/* BOUTON DÉCONNEXION ET NOM UTILISATEUR */
+/* ============================================ */
+.connecter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-name {
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.btn-deconnexion {
+  background: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background 0.3s;
+}
+
+.btn-deconnexion:hover {
+  background: #c82333;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+  .user-name {
+    font-size: 13px;
+  }
+
+  .btn-deconnexion {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
 @media (max-width: 600px) {
   .formations-page {
     padding: 100px 5% 60px;

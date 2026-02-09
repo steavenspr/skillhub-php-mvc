@@ -57,9 +57,15 @@
             </ul>
         </nav>
 
-        <!-- Bouton d'ouverture de la modale d'authentification -->
-        <!-- Déclenche l'affichage de la modale via script.js -->
+        <!-- Zone d'authentification dynamique -->
+        <!-- Affiche soit le bouton de connexion, soit les infos utilisateur + déconnexion -->
         <div class="connecter">
-            <button id="btn-open-modal">S'inscrire / Se connecter</button>
-        </div>
+            <?php if(isset($_SESSION['user'])): ?>
+                <!-- Utilisateur connecté : affichage du prénom et bouton déconnexion -->
+                <span class="user-name">Bonjour <?= htmlspecialchars($_SESSION['user']['prenom']) ?></span>
+                <a href="<?= URL ?>?action=auth/deconnexion" class="btn-deconnexion">Déconnexion</a>
+            <?php else: ?>
+                <!-- Utilisateur non connecté : bouton d'ouverture de la modale -->
+                <button id="btn-open-modal">S'inscrire / Se connecter</button>
+            <?php endif; ?>
     </header>
