@@ -117,14 +117,4 @@ Auteur
 Stea SO
 Étudiant en systèmes d’information et développement web
 
-
----
-
-Si tu veux, je peux ajouter une section plus technique du type :
-
-- Endpoints AJAX
-- Sécurité (password_hash, tokens, etc.)
-- Exemple de requête Fetch
-
-Tu me dis et je l’améliore.
 ```
